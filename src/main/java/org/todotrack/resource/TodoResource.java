@@ -10,6 +10,11 @@ import java.util.Date;
 public class TodoResource
 {
     private final TodoEntityDAO todoEntityDAO;
+
+    public TodoResource(TodoEntityDAO todoEntityDAO) {
+        this.todoEntityDAO = todoEntityDAO;
+    }
+
     @GET
     @Path("/healthCheck")
     public String healthCheck()
