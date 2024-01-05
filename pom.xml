@@ -24,6 +24,8 @@
             <version>8.0.33</version>
         </dependency>
 
+
+
         <!-- https://mvnrepository.com/artifact/io.dropwizard/dropwizard-hibernate -->
         <dependency>
             <groupId>io.dropwizard</groupId>

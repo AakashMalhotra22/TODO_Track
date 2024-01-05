@@ -12,8 +12,7 @@ public class TodoEntity
 {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @Column(name = "id")
-        private Long id;
+        private Integer id;
 
         @NotBlank
         @Column(name = "title", nullable = false)
@@ -28,18 +27,18 @@ public class TodoEntity
         private LocalDate startDate;
 
         @NotNull
-        @Column(name = "targetdate", nullable = false)
+        @Column(name = "targetDate", nullable = false)
         private LocalDate targetDate;
 
         @NotBlank
         @Column(name = "status", nullable = false, columnDefinition = "varchar(255) default 'WIP'")
-        private String status = "WIP";
+        private String status;
 
-        public Long getId() {
+        public Integer getId() {
                 return id;
         }
 
-        public void setId(Long id) {
+        public void setId(Integer id) {
                 this.id = id;
         }
 

@@ -19,7 +19,7 @@ public class ToDoTrack extends Application<TodoConfiguration> {
     HibernateBundle<TodoConfiguration> hibernateBundle = new HibernateBundle<TodoConfiguration>(TodoEntity.class) {
         @Override
         public PooledDataSourceFactory getDataSourceFactory(TodoConfiguration todoConfiguration) {
-            return null;
+            return todoConfiguration.getDataSourceFactory();
         }
     };
     @Override
