@@ -3,12 +3,16 @@ package org.todotrack.resource;
 import io.dropwizard.hibernate.UnitOfWork;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.todotrack.dao.TodoEntityDAO;
 import org.todotrack.entity.TodoEntity;
 
 import java.util.Date;
+import java.util.List;
 
 @Path("/api")
+@Produces(MediaType.APPLICATION_JSON)
 public class TodoResource
 {
     private final TodoEntityDAO todoEntityDAO;
@@ -17,12 +21,27 @@ public class TodoResource
         this.todoEntityDAO = todoEntityDAO;
     }
 
+
     @GET
-    @Path("/healthCheck")
-    public String healthCheck()
-    {
-        return "Hi date is " + new Date();
+    @Path("/getTask/{taskId}")
+    @UnitOfWork
+    public Response getTask(@PathParam("taskId") Integer taskId) {
+        TodoEntity task = todoEntityDAO.findById(taskId);
+        if (task == null) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Task with ID " + taskId + " not found")
+                    .build();
+        }
+        return Response.ok().entity(task).build();
     }
+
+    @GET
+    @Path("/allTasks")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<TodoEntity> getAllTasks() {
+        return todoEntityDAO.findAll();
+    }
+
 
     @POST
     @Path("/addTask")
@@ -50,5 +69,18 @@ public class TodoResource
         existingTask.setStatus(updatedTask.getStatus());
 
         return todoEntityDAO.update(existingTask);
+    }
+    @DELETE
+    @Path("/deleteTask/{taskId}")
+    @UnitOfWork
+    public Response deleteTask(@PathParam("taskId") Integer taskId) {
+        if (todoEntityDAO.findById(taskId) == null) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Task with ID " + taskId + " not found")
+                    .build();
+        }
+
+        todoEntityDAO.delete(taskId);
+        return Response.ok().entity("Task with ID " + taskId + " deleted").build();
     }
 }

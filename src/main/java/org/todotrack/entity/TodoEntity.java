@@ -34,6 +34,7 @@ public class TodoEntity
         @Column(name = "status", nullable = false, columnDefinition = "varchar(255) default 'WIP'")
         private String status;
 
+
         public Integer getId() {
                 return id;
         }
