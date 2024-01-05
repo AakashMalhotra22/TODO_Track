@@ -10,6 +10,9 @@ import java.time.LocalDate;
 @Table(name = "todo")
 public class TodoEntity
 {
+        public enum Status {
+                WIP, DONE
+        }
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Integer id;
@@ -30,9 +33,9 @@ public class TodoEntity
         @Column(name = "targetDate", nullable = false)
         private LocalDate targetDate;
 
-        @NotBlank
-        @Column(name = "status", nullable = false, columnDefinition = "varchar(255) default 'WIP'")
-        private String status;
+        @Enumerated(EnumType.STRING)
+        @Column(name = "status", columnDefinition = "varchar(255) default 'WIP'")
+        private Status status = Status.WIP;
 
 
         public Integer getId() {
@@ -75,11 +78,11 @@ public class TodoEntity
                 this.targetDate = targetDate;
         }
 
-        public String getStatus() {
+        public Status getStatus() {
                 return status;
         }
 
-        public void setStatus(String status) {
+        public void setStatus(Status status) {
                 this.status = status;
         }
 }

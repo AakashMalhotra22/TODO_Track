@@ -4,7 +4,6 @@ import io.dropwizard.hibernate.AbstractDAO;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.ws.rs.core.Response;
-import org.apache.commons.lang3.StringUtils;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.todotrack.entity.TodoEntity;
@@ -35,6 +34,7 @@ public class TodoEntityDAO extends AbstractDAO<TodoEntity> {
             criteria.from(TodoEntity.class);
             return session.createQuery(criteria).getResultList();
         }catch (Exception e){
+            System.out.println(e);
             return new ArrayList<>();
         }
     }
